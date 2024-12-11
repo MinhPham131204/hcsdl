@@ -1,0 +1,1 @@
+select * from Products where sellerID = 3;

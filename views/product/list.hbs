@@ -1,0 +1,65 @@
+<div style="margin-top: 60px;">
+    {{!-- search by product name --}}
+    <div class="form-group">
+        <form method="get" action="/seller/product/search" style="margin-top: 8px;">
+            <div>
+                <div style="display: inline-block; width: 48%;">
+                    <label for="searchTerm">Tên sản phẩm</label>
+                    <input type="text" class="form-control" id="searchTerm" name="searchTerm" placeholder="Nhập tên sản phẩm">
+                </div>
+                <div style="display: inline-block; width: 48%; margin-left: 2%">
+                    <label for="category">Danh mục</label>
+                    <select name="categoryID" id="categoryID" class="form-select">
+                        {{#each category}}
+                        <option value="{{this.ID}}">{{this.tên_danh_mục}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 15px">Tìm kiếm</button>
+        </form>
+    </div>
+
+    <table class="table mt-4 table-striped table-bordered" style="margin-top: 40px;">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Sản phẩm</th>
+                <th scope="col">Số lượng tồn kho</th>
+                <th scope="col">Số lượng đã bán</th>
+                <th scope="col">Giá tiền</th>
+                <th scope="col">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each model}}
+            <tr>
+                <td>{{this.productName}}</td>
+                <td>{{this.quantity}}</td>
+                <td>{{this.soldAmount}}</td>
+                <td>{{this.minPrice}} - {{this.maxPrice}}</td>
+                <td>
+                    <a href="/seller/product/{{this.ID}}/edit" class="btn btn-secondary" style="display: inline-block;">Sửa</a>
+                    <form method="POST" action="/seller/product/remove/{{this.ID}}?_method=DELETE" style="display: inline-block;">
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+
+            {{#each noModel}}
+            <tr>
+                <td>{{this.productName}}</td>
+                <td>{{this.quantity}}</td>
+                <td>{{this.soldAmount}}</td>
+                <td>{{this.price}}</td>
+                <td>
+                    <a href="/seller/product/{{this.ID}}/edit" class="btn btn-secondary" style="display: inline-block;">Sửa</a>
+                    <form method="POST" action="/seller/product/remove/{{this.ID}}?_method=DELETE" style="display: inline-block;">
+                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    </form>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

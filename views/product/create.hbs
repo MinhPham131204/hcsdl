@@ -1,0 +1,147 @@
+<h1 style="margin-top: 20px;">Thêm sản phẩm</h1>
+<div style="margin-top: 40px;">
+    <form method="POST" action="/seller/product/store" enctype="multipart/form-data" class="mt-10">
+        {{!-- title --}}
+        <div class="form-group">
+            <label for="name">Tên sản phẩm</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+
+        {{!-- category --}}
+        <div class="form-group">
+            <label for="categoryID">Danh mục</label>
+            <select name="categoryID" id="categoryID" class="form-select">
+                {{#each category}}
+                <option value="{{this.ID}}">{{this.tên_danh_mục}}</option>
+                {{/each}}
+            </select>
+        </div>
+
+        {{!-- description --}}
+        <div class="form-group">
+            <label for="description">Mô tả:</label>
+            <textarea id="description" class="form-control" name="description" rows="8" cols="50"></textarea>
+        </div>
+
+        <div id="variants-container" style="display: none;">
+            <div class="variant mt-4 mb-4">
+                <label for="model">Biến thể</label>
+                <fieldset style="border: 2px solid black;">
+                    <div class="mt-2 mb-2" style="margin-left: 8px; margin-right: 8px">
+                        <div class="form-group">
+                            <label for="model">Tên biến thể</label>
+                            <input type="text" class="form-control" id="model" name="model">
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group" style="display: inline-block; width:48%">
+                                <label for="stockQuantity">Số lượng tồn kho</label>
+                                <input type="text" class="form-control" id="stockQuantity" name="stockQuantity">
+                            </div>
+                            <div class="form-group" style="display: inline-block; width:48%; margin-left: 3%">
+                                <label for="price">Giá tiền</label>
+                                <input type="text" class="form-control" id="price" name="price" oninput="
+                                    let value = this.value.replace(/\D/g, ''); 
+                                    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); 
+                                    this.value = value;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="model_img">Hình ảnh</label>
+                            <input type="file" class='form-control' accept="image/jpeg,image/png,image/jpg" multiple
+                                id="model_img" name="model_img">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Địa chỉ</label>
+                            <select name="address" id="address" class="form-select">
+                                {{#each address}}
+                                <option value="{{this.ID}}">{{this.stockAddress}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <button id="add-variant-btn" type="button" class="btn btn-primary">Thêm biến thể</button>
+
+        <div class="mt-4 mb-4" id="no-model">
+            {{!-- stockQuantity --}}
+            <div class="form-group">
+                <label for="stockQuantity">Số lượng tồn kho</label>
+                <input type="text" class="form-control" id="stockQuantity" name="stockQuantity">
+            </div>
+
+            {{!-- price --}}
+            <div class="form-group">
+                <label for="price">Giá tiền</label>
+                <input type="text" class="form-control" id="price" name="price" oninput="
+                    let value = this.value.replace(/\D/g, ''); 
+                    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); 
+                    this.value = value;">
+            </div>
+
+            <div class="form-group">
+                <label for="address">Địa chỉ</label>
+                <select name="address" id="address" class="form-select">
+                    {{#each address}}
+                    <option value="{{this.ID}}">{{this.stockAddress}}</option>
+                    {{/each}}
+                </select>
+            </div>
+
+        </div>
+
+
+        {{!-- image --}}
+        <div class="form-group">
+            <label for="image">Hình ảnh</label>
+            <input type="file" class='form-control' accept="image/jpeg,image/png,image/jpg" multiple id="image"
+                name="image">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Thêm sản phẩm</button>
+    </form>
+</div>
+
+<script>
+    // Hàm loại bỏ các <option> có value trùng lặp
+    document.addEventListener("DOMContentLoaded", function () {
+        const selectElement = document.getElementById("address");
+        const options = Array.from(selectElement.options); // Lấy tất cả các <option>
+        const uniqueValues = new Set();
+
+        options.forEach(option => {
+            if (uniqueValues.has(option.value)) {
+                option.remove(); // Loại bỏ nếu giá trị đã tồn tại
+            } else {
+                uniqueValues.add(option.value); // Thêm giá trị vào Set
+            }
+        });
+    });
+
+    document.getElementById("add-variant-btn").addEventListener("click", function () {
+        const container = document.getElementById("variants-container"); // Phần tử chứa tất cả biến thể
+        const firstVariant = container.querySelector(".variant"); // Lấy mẫu khung biến thể đầu tiên
+
+        if(container.style.display === 'none') {
+            container.style.display = 'block'
+            document.getElementById("no-model").style.display = 'none'
+        }
+        else {
+            if (firstVariant) {
+                const newVariant = firstVariant.cloneNode(true); // Sao chép khung biến thể
+                container.appendChild(newVariant); // Thêm khung mới vào container
+
+                // Làm sạch giá trị của các trường trong khung mới
+                newVariant.querySelectorAll("input, select").forEach(field => {
+                    if (field.type === "file") {
+                        field.value = ""; // Xóa giá trị file
+                    } else {
+                        field.value = ""; // Xóa giá trị khác
+                    }
+                });
+            }
+        }
+    });
+
+</script>

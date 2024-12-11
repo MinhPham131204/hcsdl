@@ -1,0 +1,48 @@
+<div style="margin-top: 60px;">
+    {{!-- search by product name --}}
+    <div class="form-group">
+        <form method="get" action="/seller/product/search" style="margin-top: 8px;">
+            <div>
+                <div style="display: inline-block; width: 48%;">
+                    <label for="searchTerm">Tên sản phẩm</label>
+                    <input type="text" class="form-control" id="searchTerm" name="searchTerm" placeholder="Nhập tên sản phẩm">
+                </div>
+                <div style="display: inline-block; width: 48%; margin-left: 2%">
+                    <label for="category">Danh mục</label>
+                    <select name="categoryID" id="categoryID" class="form-select">
+                        {{#each category}}
+                        <option value="{{this.ID}}">{{this.tên_danh_mục}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" style="margin-top: 15px">Tìm kiếm</button>
+        </form>
+    </div>
+
+    <table class="table mt-4 table-striped table-bordered" style="margin-top: 40px;">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Sản phẩm</th>
+                <th scope="col">Trạng thái bán</th>
+                <th scope="col">Số lượng đã bán</th>
+                <th scope="col">Đánh giá</th>
+                <th scope="col">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each result}}
+            <tr>
+                <td>{{this.productName}}</td>
+                <td>{{this.status}}</td>
+                <td>{{this.rating}}</td>
+                <td>{{this.soldAmount}}</td>
+                <td>
+                    <a href="/seller/product/{{this.ID}}/edit" class="btn btn-link">Sửa</a>
+                    <a href="" class="btn btn-link" data-toggle="modal" data-id="{{this.ID}}" data-target="#delete-course-modal">Xóa</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
