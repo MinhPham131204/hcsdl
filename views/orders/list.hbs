@@ -1,0 +1,27 @@
+<div class="mt-4">
+    <h3>Danh sách đơn hàng</h3>
+    <table class="table mt-4 table-striped table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Mã đơn hàng</th>
+                <th scope="col">Ngày đặt hàng</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Giá trị đơn hàng </th>
+                <th scope="col">Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each list}}
+            <tr>
+                <td>{{this.orderID}}</td>
+                <td>{{this.orderedTime}}</td>
+                <td>{{this.quantity}}</td>
+                <td>{{this.totalPrice}}</td>
+                <td>
+                    <a href="/seller/order/{{this.orderID}}" class="btn btn-outline-primary d-inline">Xem chi tiết</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>

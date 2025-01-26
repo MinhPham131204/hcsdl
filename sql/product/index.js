@@ -24,21 +24,20 @@ class Result {
         } 
         catch (err) {
             console.log(err)
-            res.json('Error')
         }
     }
 
-    async searchRes(sellerID, category, name) {
+    async searchRes(sellerID, categoryID, name) {
         let pool = await sql.connect(sqlConfig)
-        // const test = fs.readFileSync(path.join(__dirname, 'search.sql'), 'utf8')
+        const test = fs.readFileSync(path.join(__dirname, 'search.sql'), 'utf8')
 
-        const request = new sql.Request()
-        request.input('sellerID', sql.Int, sellerID); // Thay giá trị tham số phù hợp
-        request.input('categoryID', sql.Int, category);
-        request.input('searchTerm', sql.NVarChar, name);
+        const result = await pool.request()
+        .input('sellerID', sql.Int, sellerID)
+        .input('categoryID', sql.Int, categoryID)
+        .input('searchTerm', sql.NVarChar, name)
+        .query(test);
 
-        const result = await request.execute('SearchProducts');
-        return result.recordset;
+        return result.recordsets;
     }
 }
 

@@ -1,6 +1,7 @@
 const express = require('express')
 const handlebars = require('express-handlebars');
 const methodOverride = require('method-override')
+var cookieParser = require('cookie-parser')
 
 const app = express()
 const route = require('./routing')
@@ -8,6 +9,7 @@ const route = require('./routing')
 const port = 3001
 
 app.use(methodOverride('_method'))
+app.use(cookieParser())
 
 app.use(
   express.urlencoded({
@@ -19,15 +21,11 @@ app.use(express.json());
 app.engine('.hbs', handlebars.engine({
   extname: '.hbs',
   helpers: {
-    sum: (a, b) => a + b,
+    sum: (a, b) => a + b
   },
 }));
 app.set('view engine', '.hbs');
 app.set('views', './views')
-
-// app.get('/', (req, res) => {
-//   res.render('./product/create')
-// })
 
 route(app)
 

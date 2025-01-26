@@ -1,0 +1,46 @@
+<div class="mt-4">
+    <h3>Thông tin đơn hàng</h3>
+    <h6>Đơn hàng #{{mainInfo.orderID}}</h6>
+    <p><span class="fw-semibold">Ngày đặt hàng: </span>{{mainInfo.orderedTime}}</p>
+    <table class="table mt-4 table-striped table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Sản phẩm</th>
+                <th scope="col">Giá trị sản phẩm</th>
+                <th scope="col">Các loại phí</th>
+                <th scope="col">Giảm giá</th>
+                <th scope="col">Doanh thu</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each detail}}
+            <tr>
+                <td>
+                    <h6>{{this.productName}}</h6>
+                    <p>Số lượng: {{this.quantity}}</p>
+                </td>
+                <td>{{this.productPrice}}</td>
+                <td>
+                    <span><span>Phí sàn thu: </span>{{this.fee}}</span><br>
+                    <span><span>Phí vận chuyển: </span>{{mainInfo.deliveryFee}}<span>
+                </td>
+                <td>0đ</td>
+                <td>
+                    {{this.price}}
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    <div class="my-4">
+        <h5>Thông tin thanh toán</h5>
+        <p class="mb-1"><span class="fw-semibold">Phương thức thanh toán: </span>{{mainInfo.paymentMethod}}</p>
+        <p><span class="fw-semibold">Khách hàng trả: </span>{{mainInfo.totalPrice}}</p>
+    </div>
+
+    <div class="mt-4">
+        <h5>Thông tin khách hàng</h5>
+        <p class="mb-1"><span class="fw-semibold">Họ tên: </span>{{mainInfo.username}}</p>
+        <p><span class="fw-semibold">Địa chỉ: </span>{{mainInfo.userAddress}}</p>
+    </div>
+</div>

@@ -1,0 +1,2 @@
+select o.*, p.productName, p.price as productPrice from OrderDetail o inner join Products p on p.ID = o.productID where orderID = @id;
+select o.*, u.username, u.userAddress from Orders o inner join Users u on o.customerID = u.userID where orderID = @id;

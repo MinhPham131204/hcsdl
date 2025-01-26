@@ -1,15 +1,15 @@
-<h1 style="margin-top: 20px;">Thêm sản phẩm</h1>
-<div style="margin-top: 40px;">
+<div class="mt-4">
+    <h2 class="mb-4">Thêm sản phẩm</h2>
     <form method="POST" action="/seller/product/store" enctype="multipart/form-data" class="mt-10">
         {{!-- title --}}
         <div class="form-group">
-            <label for="name">Tên sản phẩm</label>
+            <label for="name" class="form-label">Tên sản phẩm</label>
             <input type="text" class="form-control" id="name" name="name" required>
         </div>
 
         {{!-- category --}}
         <div class="form-group">
-            <label for="categoryID">Danh mục</label>
+            <label for="categoryID" class="form-label">Danh mục</label>
             <select name="categoryID" id="categoryID" class="form-select">
                 {{#each category}}
                 <option value="{{this.ID}}">{{this.tên_danh_mục}}</option>
@@ -19,25 +19,25 @@
 
         {{!-- description --}}
         <div class="form-group">
-            <label for="description">Mô tả:</label>
+            <label for="description" class="form-label">Mô tả:</label>
             <textarea id="description" class="form-control" name="description" rows="8" cols="50"></textarea>
         </div>
 
         <div id="variants-container" style="display: none;">
             <div class="variant mt-4 mb-4">
                 <label for="model">Biến thể</label>
-                <fieldset style="border: 2px solid black;">
-                    <div class="mt-2 mb-2" style="margin-left: 8px; margin-right: 8px">
+                <fieldset class="border border-black border-2">
+                    <div class="mt-2 mb-2 mx-3">
                         <div class="form-group">
                             <label for="model">Tên biến thể</label>
                             <input type="text" class="form-control" id="model" name="model">
                         </div>
-                        <div class="form-group">
-                            <div class="form-group" style="display: inline-block; width:48%">
+                        <div class="form-group row">
+                            <div class="form-group col">
                                 <label for="stockQuantity">Số lượng tồn kho</label>
                                 <input type="text" class="form-control" id="stockQuantity" name="stockQuantity">
                             </div>
-                            <div class="form-group" style="display: inline-block; width:48%; margin-left: 3%">
+                            <div class="form-group col">
                                 <label for="price">Giá tiền</label>
                                 <input type="text" class="form-control" id="price" name="price" oninput="
                                     let value = this.value.replace(/\D/g, ''); 

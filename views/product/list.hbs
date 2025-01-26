@@ -1,26 +1,28 @@
-<div style="margin-top: 60px;">
+<div class="mt-4">
     {{!-- search by product name --}}
     <div class="form-group">
-        <form method="get" action="/seller/product/search" style="margin-top: 8px;">
-            <div>
-                <div style="display: inline-block; width: 48%;">
+        <form method="get" action="/seller/product/search">
+            <div class="row">
+                <div class="col">
                     <label for="searchTerm">Tên sản phẩm</label>
-                    <input type="text" class="form-control" id="searchTerm" name="searchTerm" placeholder="Nhập tên sản phẩm">
+                    <input type="text" class="form-control" id="searchTerm" name="searchTerm" placeholder="Nhập tên sản phẩm" value="{{queryInfo.term}}">
                 </div>
-                <div style="display: inline-block; width: 48%; margin-left: 2%">
+                <div class="col">
                     <label for="category">Danh mục</label>
-                    <select name="categoryID" id="categoryID" class="form-select">
+                    <select name="categoryID" id="handle-category" class="form-select">
+                        <option value="{{queryInfo.categoryID}}">{{queryInfo.categoryName}}</option>
+                        <option value="0">Tất cả danh mục</option>
                         {{#each category}}
                         <option value="{{this.ID}}">{{this.tên_danh_mục}}</option>
                         {{/each}}
                     </select>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" style="margin-top: 15px">Tìm kiếm</button>
+            <button type="submit" class="btn btn-primary mt-3">Tìm kiếm</button>
         </form>
     </div>
 
-    <table class="table mt-4 table-striped table-bordered" style="margin-top: 40px;">
+    <table class="table mt-4 table-striped table-bordered">
         <thead class="thead-light">
             <tr>
                 <th scope="col">Sản phẩm</th>
@@ -38,9 +40,9 @@
                 <td>{{this.soldAmount}}</td>
                 <td>{{this.minPrice}} - {{this.maxPrice}}</td>
                 <td>
-                    <a href="/seller/product/{{this.ID}}/edit" class="btn btn-secondary" style="display: inline-block;">Sửa</a>
-                    <form method="POST" action="/seller/product/remove/{{this.ID}}?_method=DELETE" style="display: inline-block;">
-                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    <a href="/seller/product/{{this.ID}}/edit" class="btn btn-outline-secondary d-inline-block">Sửa</a>
+                    <form method="POST" action="/seller/product/remove/{{this.ID}}?_method=DELETE" class="d-inline-block">
+                        <button type="submit" class="btn btn-outline-danger">Xóa</button>
                     </form>
                 </td>
             </tr>
@@ -53,9 +55,9 @@
                 <td>{{this.soldAmount}}</td>
                 <td>{{this.price}}</td>
                 <td>
-                    <a href="/seller/product/{{this.ID}}/edit" class="btn btn-secondary" style="display: inline-block;">Sửa</a>
-                    <form method="POST" action="/seller/product/remove/{{this.ID}}?_method=DELETE" style="display: inline-block;">
-                        <button type="submit" class="btn btn-danger">Xóa</button>
+                    <a href="/seller/product/{{this.ID}}/edit" class="btn btn-outline-secondary d-inline-block">Sửa</a>
+                    <form method="POST" action="/seller/product/remove/{{this.ID}}?_method=DELETE" class="d-inline-block">
+                        <button type="submit" class="btn btn-outline-danger">Xóa</button>
                     </form>
                 </td>
             </tr>
@@ -63,3 +65,27 @@
         </tbody>
     </table>
 </div>
+
+<script>
+    // Hàm loại bỏ các <option> có value trùng lặp
+    function removeDuplicateOptions(selectId) {
+        const selectElement = document.getElementById(selectId);
+        const seenValues = new Set(); // Dùng Set để lưu các giá trị duy nhất
+        const options = Array.from(selectElement.options);
+
+        options.forEach(option => {
+            if (seenValues.has(option.value)) {
+                selectElement.removeChild(option); // Loại bỏ nếu giá trị đã tồn tại
+            } else {
+                seenValues.add(option.value); // Thêm giá trị vào Set
+            }
+        });
+    }
+
+    // Xử lý cho tất cả các <select> cần kiểm tra trùng lặp
+    document.addEventListener("DOMContentLoaded", function() {
+        removeDuplicateOptions("handle-category");
+        removeDuplicateOptions("handle-status");
+        removeDuplicateOptions("handle-address");
+    });
+</script>

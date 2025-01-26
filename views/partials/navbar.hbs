@@ -1,9 +1,11 @@
 <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark" style="position: fixed; left: 0;">
     <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
-        <a href="/" class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-            <span class="fs-5 d-none d-sm-inline">Menu</span>
-        </a>
+        <h1 class="fs-5 d-none d-sm-inline my-4">Seller Center</h1>
         <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+             <li>
+                <a href="/seller/main" class="nav-link px-0 align-middle">
+                    <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Trang chủ</span></a>
+            </li>
             <li>
                 <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                     <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Sản phẩm</span> </a>
@@ -17,7 +19,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#" class="nav-link px-0 align-middle">
+                <a href="/seller/order/list" class="nav-link px-0 align-middle">
                     <i class="fs-4 bi-table"></i> <span class="ms-1 d-none d-sm-inline">Đơn hàng</span></a>
             </li>
             <li>
@@ -25,7 +27,7 @@
                     <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Chương trình khuyến mãi</span> </a>
                 <ul class="collapse show nav flex-column ps-3" id="submenu2" data-bs-parent="#menu">
                     <li class="w-100">
-                        <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Thêm khuyến mãi</span></a>
+                        <a href="/seller/discount/create" class="nav-link px-0"> <span class="d-none d-sm-inline">Thêm khuyến mãi</span></a>
                     </li>
                     <li>
                         <a href="#" class="nav-link px-0"> <span class="d-none d-sm-inline">Danh sách chương trình</span></a>
@@ -35,14 +37,10 @@
         </ul>
         <hr>
         <div class="dropdown pb-4">
-            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-                id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://cdn-icons-png.flaticon.com/512/9187/9187604.png" alt="icon" width="30" height="30" class="rounded-circle">
-                <span class="d-none d-sm-inline mx-1">Nhà bán</span>
+            <a href="/logout" class="nav-link px-0">
+                <img src="https://cdn-icons-png.flaticon.com/512/4043/4043198.png" alt="icon" width="25" height="25">
+                <span class="d-none d-sm-inline mx-1">Đăng xuất</span>
             </a>
-            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                <li><a class="dropdown-item" href="#">Sign out</a></li>
-            </ul>
         </div>
     </div>
 </div>
