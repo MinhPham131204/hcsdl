@@ -23,13 +23,20 @@ class Login {
         .input("password", sql.NVarChar, req.body.password)
         .query(check);
 
-        res.cookie('sellerID', result.recordset[0].userID, {
-            maxAge:  15 * 60 * 1000, // 1 day
-            httpOnly: true,
-            secure: true,
-        })
+        if(result.recordset[0]) {
+            res.cookie('sellerID', result.recordset[0].userID, {
+                maxAge:  60 * 60 * 1000, // 1 day
+                httpOnly: true,
+                secure: true,
+            })
+    
+            res.redirect('/seller/order/list')
+        }
 
-        res.redirect('/seller/order/list')
+        else res.render('validate/login', {
+            layout: 'login',
+            err: 'Người dùng nhập không chính xác'
+        })
     }
 
     async mainPage(req, res) {
@@ -45,6 +52,40 @@ class Login {
     async logout(req, res){
         res.clearCookie('sellerID');
         res.redirect('/')
+    }
+
+    async yourEmail(req, res){
+        res.render('validate/yourEmail', {layout: 'login'})
+    }
+
+    async verifyEmail(req, res){
+        let pool = await sql.connect(sqlConfig);
+
+        const result = await pool.request()
+        .input("email", sql.VarChar, req.body.email)
+        .query("select email from Users where email = @email and userID in (select sellerID from Seller)")
+
+        if(result.recordset[0]) {
+            res.redirect('/getOTP')
+        }
+
+        else res.render('validate/yourEmail', {
+            layout: 'login',
+            err: 'Email nhà bán không tồn tại',
+            email: req.body.email
+        })
+    }
+
+    async yourOTP(req, res){
+        res.render('validate/getOTP', {layout: 'login'})
+    }
+
+    async createNewPassword(req, res){
+        res.render('validate/newPassword', {layout: 'login'})
+    }
+
+    async resetPassword(req, res) {
+        
     }
 }
 

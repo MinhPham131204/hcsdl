@@ -1,0 +1,22 @@
+<style>
+  form {
+    margin: 10% 35%;
+  }
+  form button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+</style>
+<form method="POST" action="/verifyEmail" class="border border-black rounded-4 needs-validation" novalidate>
+    <div class="p-3">
+        <div class="form-group my-3">
+            <label for="username" class="form-label">Nhập OTP (6 chữ số)</label>
+            <input type="number" class="form-control" name="OTP-token" required>
+        </div>
+        <p class="text-danger">{{err}}</p>
+        <div class="action mb-3">
+            <button type="button" class="btn btn-danger">Gửi lại OTP</button>
+            <button type="submit" class="btn btn-success">Tạo mật khẩu mới</button>
+        </div>
+    </div>
+</form>

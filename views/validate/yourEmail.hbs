@@ -1,0 +1,45 @@
+<style>
+  form {
+    margin: 10% 35%;
+  }
+  form button {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+</style>
+<form method="POST" action="/verifyEmail" class="border border-black rounded-4 needs-validation" novalidate>
+    <div class="p-3">
+        <h3 class="text-center my-3">Lấy lại mật khẩu</h3>
+        <div class="form-group my-3">
+            <label for="username" class="form-label">Email nhà bán</label>
+            <input type="email" class="form-control" name="email" required value="{{email}}">
+            <div class="invalid-feedback">
+                Vui lòng điền email
+            </div>
+        </div>
+        <p class="text-danger">{{err}}</p>
+        <div class="action mb-3">
+            <button type="button" class="btn btn-danger">Về trang Đăng nhập</button>
+            <button type="submit" class="btn btn-success">Tiếp tục</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+</script>
