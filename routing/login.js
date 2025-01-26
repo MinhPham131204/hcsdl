@@ -11,5 +11,6 @@ router.get('/forgotPassword', validate.yourEmail)
 router.post('/verifyEmail', validate.verifyEmail)
 router.get('/getOTP', validate.yourOTP)
 router.get('/createNewPassword', validate.createNewPassword)
+router.put('/resetPassword', validate.resetPassword)
 
 module.exports = router

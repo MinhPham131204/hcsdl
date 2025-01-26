@@ -66,6 +66,12 @@ class Login {
         .query("select email from Users where email = @email and userID in (select sellerID from Seller)")
 
         if(result.recordset[0]) {
+            res.cookie('email', result.recordset[0].email, {
+                maxAge:  10 * 60 * 1000, // 1 day
+                httpOnly: true,
+                secure: true,
+            })
+
             res.redirect('/getOTP')
         }
 
@@ -85,7 +91,21 @@ class Login {
     }
 
     async resetPassword(req, res) {
-        
+        if(req.body.newPassword == req.body.reEnter) {
+            // update new password
+            let pool = await sql.connect(sqlConfig);
+
+            await pool.request()
+            .input('email', sql.NVarChar, req.cookies.email)
+            .input('password', sql.NVarChar, req.body.newPassword)
+            .query("update Users set hashPassword = @password where email = @email")
+
+            res.redirect('/')
+        }
+        else res.render('validate/newPassword', {
+            layout: 'login',
+            err: 'Mật khẩu không trùng khớp'
+        })
     }
 }
 
