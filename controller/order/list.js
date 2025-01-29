@@ -4,8 +4,7 @@ const orderResult = require("../../sql/order");
 
 class OrderList {
   async getList(req, res) {
-
-    const list = await orderResult.getList(req.cookies.sellerID);
+    const list = await orderResult.getList(req.user);
 
     res.render("orders/list", {
       list: list.recordsets[0]

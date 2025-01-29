@@ -2,11 +2,13 @@ const sql = require("mssql");
 const sqlConfig = require("../../configDB");
 const fs = require("fs");
 const path = require("path");
+const { generateToken } = require("../../middleware/auth");
+
 
 class Login {
     loginUI(req, res) {
-        if(req.cookies.sellerID) {
-            res.redirect('seller/order/list')
+        if(req.cookies.token) {
+            res.redirect('/seller/order/list')
         }
         else {
             res.render('validate/login', {layout: 'login'})
@@ -24,13 +26,21 @@ class Login {
         .query(check);
 
         if(result.recordset[0]) {
-            res.cookie('sellerID', result.recordset[0].userID, {
-                maxAge:  60 * 60 * 1000, // 1 day
+            const info = {
+                sellerID: result.recordset[0].userID,
+                email: req.body.email
+            }
+
+            const jwt = generateToken(info)
+
+            res.cookie('token', jwt, {
+                maxAge:  60 * 60 * 1000, // 1 hour
                 httpOnly: true,
                 secure: true,
             })
     
             res.redirect('/seller/order/list')
+            // res.json('OK')
         }
 
         else res.render('validate/login', {
@@ -39,18 +49,8 @@ class Login {
         })
     }
 
-    async mainPage(req, res) {
-        let pool = await sql.connect(sqlConfig);
-
-        const result = await pool.request().input("id", sql.Int, req.cookies.sellerID).query("SELECT username, phoneNum, userAddress from Users where userID = @id")
-
-        res.render('main-page', {
-            info: result.recordset[0]
-        })
-    }
-
     async logout(req, res){
-        res.clearCookie('sellerID');
+        res.clearCookie('token');
         res.redirect('/')
     }
 

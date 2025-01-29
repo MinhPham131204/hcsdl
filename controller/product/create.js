@@ -32,7 +32,7 @@ class CreateProduct {
 
     const address = await pool
       .request()
-      .input("Id", sql.Int, 34)
+      .input("Id", sql.Int, req.user)
       .query("SELECT * FROM StockAddress WHERE sellerID = @Id;");
 
     const response = {
@@ -122,7 +122,7 @@ class CreateProduct {
         }
   
         const request = new sql.Request();
-        request.input("sellerID", sql.Int, 34); // Thay giá trị tham số phù hợp
+        request.input("sellerID", sql.Int, req.user); // Thay giá trị tham số phù hợp
         request.input("productName", sql.NVarChar, req.body.name);
         request.input("categoryID", sql.Int, req.body.categoryID);
         request.input("description", sql.NVarChar, req.body.description);
@@ -153,7 +153,7 @@ class CreateProduct {
         req.body.price[1] = req.body.price[1].replace(/\D/g, '')
   
         const request = new sql.Request();
-        request.input("sellerID", sql.Int, 34); // Thay giá trị tham số phù hợp
+        request.input("sellerID", sql.Int, req.user); // Thay giá trị tham số phù hợp
         request.input("productName", sql.NVarChar, req.body.name);
         request.input("categoryID", sql.Int, req.body.categoryID);
         request.input("description", sql.NVarChar, req.body.description);
@@ -167,7 +167,7 @@ class CreateProduct {
   
         const stock_req = new sql.Request();
         stock_req.input("productID", sql.Int, productID); // Thay giá trị tham số phù hợp
-        stock_req.input("sellerID", sql.Int, 34);
+        stock_req.input("sellerID", sql.Int, req.user);
         stock_req.input("quantity", sql.Int, req.body.stockQuantity[1]);
         stock_req.input("stockAddressID", sql.Int, req.body.address[1]);
   

@@ -1,7 +1,6 @@
 const sql = require("mssql");
 const sqlConfig = require("../../configDB");
 const productResult = require("../../sql/product");
-const { query } = require("express");
 
 class ProductList {
   // [GET] /product/list
@@ -11,7 +10,7 @@ class ProductList {
     const category = await pool.request().query("SELECT * FROM Category");
     // const test = fs.readFileSync(path.join(__dirname, 'getList.sql'), 'utf8')
 
-    const list = await productResult.getList(req.cookies.sellerID);
+    const list = await productResult.getList(req.user);
 
     res.render("product/list", {
       category: category.recordsets[0],
@@ -33,7 +32,7 @@ class ProductList {
         );
 
     const result = await productResult.searchRes(
-      req.cookies.sellerID,
+      req.user,
       req.query.categoryID,
       req.query.searchTerm
     );

@@ -70,7 +70,7 @@ class UpdateProduct {
   async update(req, res) {
     const request = new sql.Request();
     request.input("ID", sql.Int, req.params.id);
-    request.input("sellerID", sql.Int, 34); // Thay giá trị tham số phù hợp
+    request.input("sellerID", sql.Int, req.user); // Thay giá trị tham số phù hợp
     request.input("productName", sql.NVarChar, req.body.name);
     request.input("categoryID", sql.Int, req.body.categoryID);
     request.input("description", sql.NVarChar, req.body.description);
@@ -115,7 +115,7 @@ class UpdateProduct {
 
     //   const stock_req = new sql.Request();
     //   stock_req.input("productID", sql.Int, req.params.id); // Thay giá trị tham số phù hợp
-    //   stock_req.input("sellerID", sql.Int, 34);
+    //   stock_req.input("sellerID", sql.Int, req.user);
     //   stock_req.input("quantity", sql.Int, req.body.stockQuantity);
     //   stock_req.input("stockAddressID", sql.Int, req.body.address);
 
