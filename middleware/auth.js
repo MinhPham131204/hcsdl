@@ -25,3 +25,15 @@ exports.verifyToken = (req, res, next) => {
         console.log(err)
     }
 }
+
+exports.generateOTP = () => {
+    let otpCode = Math.floor(Math.random() * 999999)
+    let res = otpCode.toString()
+    while(otpCode < Math.pow(10, 5)) {
+        if(otpCode / 100000 < 1) {
+            res = '0' + res
+            otpCode *= 10
+        }
+    }
+    return res
+}

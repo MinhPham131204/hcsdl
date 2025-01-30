@@ -9,6 +9,7 @@ router.get('/logout', validate.logout)
 router.get('/forgotPassword', validate.yourEmail)
 router.post('/verifyEmail', validate.verifyEmail)
 router.get('/getOTP', validate.yourOTP)
+router.post('/checkOTP', validate.verifyOTP)
 router.get('/createNewPassword', validate.createNewPassword)
 router.put('/resetPassword', validate.resetPassword)
 
